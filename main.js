@@ -11,13 +11,13 @@ let board = [];
 let solution = '';
 let letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
 
-const printBoard = () =>  {
+const printBoard = () => {
   for (let i = 0; i < board.length; i++) {
     console.log(board[i]);
   }
 }
 
-const generateSolution = () =>  {
+const generateSolution = () => {
   for (let i = 0; i < 4; i++) {
     const randomIndex = getRandomInt(0, letters.length);
     solution += letters[randomIndex];
@@ -28,9 +28,25 @@ const getRandomInt = (min, max) => {
   return Math.floor(Math.random() * (max - min)) + min;
 }
 
-const generateHint = () =>  {
-  // your code here
+const generateHint = () => {
+  let guessArray = guess.split('');
+  let solutionArray = solution.split('');
+  let fullHints = 0;
+  let halfHints = 0;
+
+  for (let i = 0; < guessArray.lnegth; i++) {
+    if (guessArray[i] === solutionArray[i]) {
+      fullHints++;
+      solutionArray[i] = 0;
+    } else if (solutionArray.indexOf(guessArray[i]) > -1) {
+      halfHints++;
+      solutionArray[solutionArray.indexOf(guessArray[i])] = 1;
+    }
+  }
+
+  return fullHints + '-' + halfHints;
 }
+
 
 const mastermind = (guess) => {
   solution = 'abcd'; // Comment this out to generate a random solution
@@ -38,7 +54,7 @@ const mastermind = (guess) => {
 }
 
 
-const getPrompt = () =>  {
+const getPrompt = () => {
   rl.question('guess: ', (guess) => {
     mastermind(guess);
     printBoard();
